@@ -28,16 +28,27 @@
 
 // function to find searched city and current weather
 function searchWeather(city) {
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=44558b94b80d15a7785e0eb77b5845ac";
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=44558b94b80d15a7785e0eb77b5845ac";
     
     $.ajax({
     url: queryURL,
     method: "GET",
 }).then(function (responce) {
     console.log(responce)
-    
+
+//  pulling the weather info then appending it to the HTML   
+
+    var cityName = $("<h2>").text(responce.name);
+    // var weatherIcon = $("<img>").attr(responce.weather.icon) not working
+    var temp = $("<p>").text("Temperature: " + responce.main.temp +"°F")
+    var humid = $("<p>").text("Humidity: " + responce.main.humidity +"%")
+    var wind = $("<p>").text("Wind Speed: " + responce.wind.speed +"MPH")
+
+    $("#weather-div").append(cityName, temp, humid, wind)
 })
 }
+
+
 
 $("#search").on("click", function(event) {
     event.preventDefault();
